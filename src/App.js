@@ -1,4 +1,4 @@
-// ✅ F1 Simulator App - Modern UI with Orbitron, Glow, and Neon Effects + Centered Layout
+// ✅ F1 Simulator App - Fixed API interaction & layout styles
 
 import React, { useState } from "react";
 import axios from "axios";
@@ -33,7 +33,7 @@ export default function App() {
   const [racePace, setRacePace] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const API_BASE = "https://f1-sim-backend.onrender.com/predict";
+  const API_BASE = "https://f1-sim-backend.onrender.com";
 
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -42,7 +42,7 @@ export default function App() {
   const getLapTime = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${API_BASE}/lap_time`, {
+      const res = await axios.get(`${API_BASE}/predict/lap_time`, {
         params: { driver, year, circuit, compound },
       });
       setLapPrediction(res.data);
@@ -56,7 +56,7 @@ export default function App() {
   const getRacePace = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${API_BASE}/race_pace`, {
+      const res = await axios.get(`${API_BASE}/predict/race_pace`, {
         params: { driver, year, circuit, compound, laps },
       });
       setRacePace(res.data);
@@ -67,22 +67,24 @@ export default function App() {
     }
   };
 
-  const chartData = {
-    labels: racePace?.lap_times.map((_, i) => `Lap ${i + 1}`),
-    datasets: [
-      {
-        label: `${driver} - Lap Times`,
-        data: racePace?.lap_times.map((time) => {
-          const [min, sec] = time.split(":");
-          return parseFloat(min) * 60 + parseFloat(sec);
-        }),
-        borderColor: "#e10600",
-        backgroundColor: "rgba(255, 0, 0, 0.2)",
-        tension: 0.4,
-        fill: true,
-      },
-    ],
-  };
+  const chartData = racePace?.lap_times
+    ? {
+        labels: racePace.lap_times.map((_, i) => `Lap ${i + 1}`),
+        datasets: [
+          {
+            label: `${driver} - Lap Times`,
+            data: racePace.lap_times.map((time) => {
+              const [min, sec] = time.split(":");
+              return parseFloat(min) * 60 + parseFloat(sec);
+            }),
+            borderColor: "#e10600",
+            backgroundColor: "rgba(255, 0, 0, 0.2)",
+            tension: 0.4,
+            fill: true,
+          },
+        ],
+      }
+    : null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-purple-900 to-black text-white font-[Inter]">
@@ -132,6 +134,32 @@ export default function App() {
             </button>
           </div>
         </section>
+
+        {lapPrediction && (
+          <div className="bg-black/60 p-6 rounded-lg mt-12 animate-fade-in">
+            <h2 className="text-2xl font-bold mb-2 text-purple-400">
+              Predicted Lap Time
+            </h2>
+            <p>
+              <strong>{lapPrediction.driver}</strong> @ {lapPrediction.circuit} →
+              <span className="text-green-400 text-2xl font-mono ml-2">
+                {lapPrediction.predicted_lap_time_formatted} sec
+              </span>
+            </p>
+          </div>
+        )}
+
+        {racePace && chartData && (
+          <div className="bg-black/60 p-6 rounded-lg mt-12 animate-fade-in">
+            <h2 className="text-2xl font-bold mb-4 text-blue-400">
+              Race Pace Simulation
+            </h2>
+            <Line data={chartData} />
+            <p className="mt-4 text-lg">
+              Total Race Time: <span className="text-green-300 font-semibold text-xl">{racePace.total_race_time}</span>
+            </p>
+          </div>
+        )}
 
         <div className="mt-16 text-left animate-fade-in">
           <h2 className="text-2xl font-bold font-[Orbitron] mb-2">Circuit Description</h2>
