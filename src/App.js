@@ -199,7 +199,7 @@ export default function App() {
               Predicted Lap Time
             </h2>
             <p>
-              <strong>{lapPrediction.driver}</strong> @ {lapPrediction.circuit}{" "}
+              <strong>{lapPrediction.driver}</strong> @ {lapPrediction.circuit} {" "}
               →
               <span className="text-green-400 text-2xl font-mono ml-2">
                 {lapPrediction.predicted_lap_time_formatted} sec
@@ -215,7 +215,7 @@ export default function App() {
             </h2>
             <Line data={chartData} />
             <p className="mt-4 text-lg">
-              Total Race Time:{" "}
+              Total Race Time: {" "}
               <span className="text-green-300 font-semibold text-xl">
                 {racePace.total_race_time}
               </span>
@@ -258,11 +258,11 @@ export default function App() {
           className="mt-10 text-sm text-gray-400 text-center"
         >
           <p>
-            Built & Deployed by{" "}
+            Built & Deployed by {" "}
             <strong className="text-white">Yash Shinde</strong>
           </p>
           <p>
-            GitHub:{" "}
+            GitHub: {" "}
             <a
               className="text-blue-400"
               href="https://github.com/yashh21nd"
@@ -271,14 +271,14 @@ export default function App() {
             >
               yashh21nd
             </a>{" "}
-            | Email:{" "}
+            | Email: {" "}
             <a
               className="text-blue-400"
               href="mailto:yashshinde.dev.work@gmail.com"
             >
               yashshinde.dev.work@gmail.com
             </a>{" "}
-            | LinkedIn:{" "}
+            | LinkedIn: {" "}
             <a
               className="text-blue-400"
               href="https://www.linkedin.com/in/yashshinde21/"
@@ -293,3 +293,4 @@ export default function App() {
     </div>
   );
 }
+
