@@ -1,5 +1,3 @@
-// ✅ F1 Simulator App - Creative UI Layout
-
 import React, { useState } from "react";
 import axios from "axios";
 import { Line } from "react-chartjs-2";
@@ -12,8 +10,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import "@fontsource/orbitron";
-import "@fontsource/inter";
 import "./styles.css";
 
 ChartJS.register(
@@ -48,7 +44,7 @@ export default function App() {
         params: { driver, year, circuit, compound },
       });
       setLapPrediction(res.data);
-    } catch {
+    } catch (e) {
       alert("Failed to fetch lap time");
     } finally {
       setLoading(false);
@@ -62,7 +58,7 @@ export default function App() {
         params: { driver, year, circuit, compound, laps },
       });
       setRacePace(res.data);
-    } catch {
+    } catch (e) {
       alert("Failed to fetch race pace");
     } finally {
       setLoading(false);
@@ -87,92 +83,80 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white font-inter px-4">
-      {/* NAVBAR */}
+    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900 to-black text-white px-4">
       <nav className="sticky top-0 z-50 bg-black/90 backdrop-blur-md shadow-md p-4 w-full flex justify-center gap-6">
         {["ABOUT", "CREATOR", "CONTACT"].map((item) => (
           <button
             key={item}
             onClick={() => scrollToSection(item.toLowerCase())}
-            className="px-6 py-2 bg-black text-white border border-gray-300 hover:border-white hover:bg-white hover:text-black transition-all rounded-md font-orbitron"
+            className="px-6 py-2 bg-black text-white border border-gray-300 hover:border-white hover:bg-white hover:text-black transition-all rounded-md"
           >
             {item}
           </button>
         ))}
       </nav>
 
-      {/* HERO */}
-      <header className="text-center pt-12 pb-16">
-        <h1 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 font-orbitron mb-4">
+      <main className="max-w-6xl mx-auto text-center">
+        <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 py-10 animate-pulse">
           F1 Lap Time & Race Pace Simulator
         </h1>
-        <p className="text-gray-300 text-md md:text-lg max-w-2xl mx-auto">
-          Predict driver performance on any track with customizable parameters. Powered by real-time race data and smart simulation logic.
-        </p>
-      </header>
 
-      {/* SIMULATOR BLOCK */}
-      <section className="bg-gray-900/80 rounded-2xl shadow-lg p-6 mb-10 max-w-4xl mx-auto">
-        <h2 className="text-2xl font-orbitron mb-6 text-center">Simulate Parameters</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          <input type="text" value={driver} onChange={(e) => setDriver(e.target.value)} placeholder="Driver Code" className="p-3 text-black rounded-lg w-full" />
-          <input type="number" value={year} onChange={(e) => setYear(+e.target.value)} placeholder="Year" className="p-3 text-black rounded-lg w-full" />
-          <input type="text" value={circuit} onChange={(e) => setCircuit(e.target.value)} placeholder="Circuit ID" className="p-3 text-black rounded-lg w-full" />
-          <select value={compound} onChange={(e) => setCompound(e.target.value)} className="p-3 text-black rounded-lg w-full">
-            <option value="soft">Soft</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-          </select>
-          <input type="number" value={laps} onChange={(e) => setLaps(+e.target.value)} placeholder="Laps" className="p-3 text-black rounded-lg w-full" />
+        <section id="about" className="bg-gray-900/80 rounded-2xl shadow-lg p-6 mb-10 max-w-4xl mx-auto">
+          <h2 className="text-2xl mb-6 text-center">Simulate Parameters</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <input type="text" value={driver} onChange={(e) => setDriver(e.target.value)} placeholder="Driver Code" className="p-3 text-black rounded-lg w-full" />
+            <input type="number" value={year} onChange={(e) => setYear(+e.target.value)} placeholder="Year" className="p-3 text-black rounded-lg w-full" />
+            <input type="text" value={circuit} onChange={(e) => setCircuit(e.target.value)} placeholder="Circuit ID" className="p-3 text-black rounded-lg w-full" />
+            <select value={compound} onChange={(e) => setCompound(e.target.value)} className="p-3 text-black rounded-lg w-full">
+              <option value="soft">Soft</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+            <input type="number" value={laps} onChange={(e) => setLaps(+e.target.value)} placeholder="Laps" className="p-3 text-black rounded-lg w-full" />
+          </div>
+        </section>
+
+        <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
+          <button onClick={getLapTime} disabled={loading} className="px-6 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-purple-500 font-bold text-white transition-transform transform hover:scale-105">
+            {loading ? "Simulating..." : "Get Lap Time"}
+          </button>
+          <button onClick={getRacePace} disabled={loading} className="px-6 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-blue-500 hover:to-cyan-500 font-bold text-white transition-transform transform hover:scale-105">
+            {loading ? "Simulating..." : "Simulate Race Pace"}
+          </button>
         </div>
-      </section>
 
-      {/* BUTTONS */}
-      <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
-        <button onClick={getLapTime} disabled={loading} className="px-6 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-purple-500 font-bold text-white transition-transform transform hover:scale-105">
-          {loading ? "Simulating..." : "Get Lap Time"}
-        </button>
-        <button onClick={getRacePace} disabled={loading} className="px-6 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-blue-500 hover:to-cyan-500 font-bold text-white transition-transform transform hover:scale-105">
-          {loading ? "Simulating..." : "Simulate Race Pace"}
-        </button>
-      </div>
+        <section className="max-w-3xl mx-auto mb-8 text-left" id="description">
+          <h3 className="text-2xl font-bold mb-2">Circuit Description</h3>
+          <p className="text-gray-300 text-md">
+            Enter a circuit ID like <strong>monza</strong>, <strong>spa</strong>, or <strong>silverstone</strong> to simulate different race conditions. Each circuit varies in characteristics such as average speed, corner count, and historical data, which influence the predicted performance of the driver.
+          </p>
+        </section>
 
-      {/* RACE PACE CHART */}
-      {racePace && (
-        <div className="bg-gray-800/60 p-6 rounded-xl shadow-xl max-w-4xl mx-auto mb-12">
-          <h3 className="text-xl font-orbitron mb-4">Race Pace Simulation Chart</h3>
-          <Line data={chartData} />
-        </div>
-      )}
+        <section className="max-w-3xl mx-auto mb-12 text-left" id="creator">
+          <h3 className="text-2xl font-bold mb-2">Project Description</h3>
+          <p className="text-gray-300 text-md">
+            This project is a real-time Formula 1 Lap Time and Race Pace Simulator built using a FastAPI backend and a React + Chart.js frontend. It fetches historical lap data via the Ergast Developer API, processes it using custom logic for tire compound effects, averages, and fluctuations, and presents predictions for both individual lap times and full race simulations.
+          </p>
+        </section>
 
-      {/* DESCRIPTION */}
-      <section id="about" className="max-w-3xl mx-auto mb-8 text-left">
-        <h3 className="text-2xl font-bold font-orbitron mb-2">Circuit Description</h3>
-        <p className="text-gray-300 text-md">
-          Enter a circuit ID like <strong>monza</strong>, <strong>spa</strong>, or <strong>silverstone</strong> to simulate different race conditions.
-          Each circuit varies in average speed, corners, and characteristics.
-        </p>
-      </section>
+        {racePace && (
+          <div className="bg-gray-800/60 p-6 rounded-xl shadow-xl max-w-4xl mx-auto mb-12">
+            <h3 className="text-xl mb-4">Race Pace Simulation Chart</h3>
+            <Line data={chartData} />
+          </div>
+        )}
 
-      <section id="creator" className="max-w-3xl mx-auto mb-12 text-left">
-        <h3 className="text-2xl font-bold font-orbitron mb-2">Project Description</h3>
-        <p className="text-gray-300 text-md">
-          This project is a Formula 1 simulator using FastAPI backend + React + Chart.js frontend.
-          It analyzes driver performance and predicts outcomes based on tire compounds, track data, and historical trends.
-        </p>
-      </section>
-
-      {/* FOOTER */}
-      <footer id="contact" className="text-center text-sm text-gray-400 pb-10">
-        <p>
-          Built & Deployed by <strong className="text-white">Yash Shinde</strong>
-        </p>
-        <p>
-          GitHub: <a className="text-blue-400" href="https://github.com/yashh21nd" target="_blank">yashh21nd</a> |
-          Email: <a className="text-blue-400" href="mailto:yashshinde.dev.work@gmail.com">yashshinde.dev.work@gmail.com</a> |
-          LinkedIn: <a className="text-blue-400" href="https://linkedin.com/in/yashshinde21" target="_blank">linkedin.com/in/yashshinde21</a>
-        </p>
-      </footer>
+        <footer id="contact" className="text-center text-sm text-gray-400 pb-10">
+          <p>
+            Built & Deployed by <strong className="text-white">Yash Shinde</strong>
+          </p>
+          <p>
+            GitHub: <a className="text-blue-400" href="https://github.com/yashh21nd" target="_blank">yashh21nd</a> |
+            Email: <a className="text-blue-400" href="mailto:yashshinde.dev.work@gmail.com">yashshinde.dev.work@gmail.com</a> |
+            LinkedIn: <a className="text-blue-400" href="https://linkedin.com/in/yashshinde21" target="_blank">linkedin.com/in/yashshinde21</a>
+          </p>
+        </footer>
+      </main>
     </div>
   );
 }
