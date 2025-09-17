@@ -1,0 +1,79 @@
+/* F1-style Animations */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in-down {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { filter: drop-shadow(0 0 0 #E10600); }
+  50% { filter: drop-shadow(0 0 16px #E10600); }
+}
+
+.animate-fade-in {
+  animation: fade-in 1s cubic-bezier(.4,2,.6,1) both;
+}
+.animate-fade-in-up {
+  animation: fade-in-up 1s cubic-bezier(.4,2,.6,1) both;
+}
+.animate-fade-in-down {
+  animation: fade-in-down 1s cubic-bezier(.4,2,.6,1) both;
+}
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 60%, #2d0000 100%);
+  color: #f1f1f1;
+  min-height: 100vh;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom F1 dashboard styles */
+.f1-block {
+  background: linear-gradient(120deg, #18181b 60%, #2d0000 100%);
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.45);
+  border-top: 4px solid #e10600;
+  padding: 2rem;
+}
+.f1-block-yellow {
+  border-top: 4px solid #facc15;
+}
+.f1-title {
+  font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.f1-highlight-red {
+  color: #e10600;
+}
+.f1-highlight-yellow {
+  color: #facc15;
+}
+.f1-card {
+  background: #18181b;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px 0 rgba(0,0,0,0.25);
+  border-left: 4px solid #e10600;
+  padding: 1.5rem;
+}
+.f1-card-yellow {
+  border-left: 4px solid #facc15;
+}
