@@ -1,8 +1,25 @@
 {
-    "build": {
-      "env": {
-        "NPM_FLAGS": "--legacy-peer-deps"
-      }
+  "build": {
+    "env": {
+      "NPM_FLAGS": "--legacy-peer-deps"
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}
   
