@@ -1,7 +1,7 @@
 // API Integration Test Utility
 // This file contains test functions to validate backend connectivity
 
-const API_BASE_URL = 'https://f1-sim-backend.onrender.com';
+const API_BASE_URL = 'https://f1-sim-backend-eyy0.onrender.com';
 
 export const testBackendConnection = async () => {
   try {

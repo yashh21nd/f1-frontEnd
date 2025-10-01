@@ -67,7 +67,7 @@ const RacePace = () => {
     setError(null);
     try {
       const res = await axios.get(
-        "https://f1-sim-backend.onrender.com/predict/race_pace",
+        "https://f1-sim-backend-eyy0.onrender.com/predict/race_pace",
         { params: form }
       );
       setLapTimes(res.data);

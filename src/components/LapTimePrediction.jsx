@@ -34,7 +34,7 @@ const LapTimePrediction = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.get("https://f1-sim-backend.onrender.com/predict/lap_time", {
+      const res = await axios.get("https://f1-sim-backend-eyy0.onrender.com/predict/lap_time", {
         params: form,
       });
       setPrediction(res.data);
@@ -154,11 +154,16 @@ const LapTimePrediction = () => {
           >
             <div className="results-container">
               <div className="results-value">
-                {prediction.predicted_lap_time || "N/A"}
+                {prediction.predicted_lap_time_formatted || "N/A"}
               </div>
               <div className="results-subtitle">
                 Predicted Lap Time
               </div>
+              {prediction.predicted_lap_time_seconds && (
+                <div className="text-sm text-gray-300 mt-2">
+                  {prediction.predicted_lap_time_seconds.toFixed(3)} seconds
+                </div>
+              )}
             </div>
 
             <div className="grid-4">
