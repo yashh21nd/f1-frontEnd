@@ -61,6 +61,12 @@ const AnimatedF1Car = () => {
 
 function App() {
   const [section, setSection] = useState("dashboard");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleSectionChange = (newSection) => {
+    setSection(newSection);
+    setMobileMenuOpen(false); // Close mobile menu when section changes
+  };
 
   return (
     <div className="min-h-screen font-['Inter'] relative bg-white">
@@ -81,7 +87,16 @@ function App() {
             </span>
           </motion.div>
           
-          <ul className="navbar-nav">
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="mobile-menu-toggle"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle mobile menu"
+          >
+            ☰
+          </button>
+          
+          <ul className={`navbar-nav ${mobileMenuOpen ? 'mobile-open' : ''}`}>
             {navItems.map((item, index) => (
               <motion.li
                 key={item.id}
@@ -90,7 +105,7 @@ function App() {
                 transition={{ delay: index * 0.1 }}
               >
                 <button
-                  onClick={() => setSection(item.id)}
+                  onClick={() => handleSectionChange(item.id)}
                   className={`nav-link ${section === item.id ? 'active' : ''}`}
                 >
                   {item.label}
