@@ -168,29 +168,29 @@ const LapTimePrediction = () => {
 
             <div className="grid-4">
               <div className="stat-card">
-                <div className="stat-value">
-                  {form.driver.toUpperCase()}
+                <div className="stat-value stat-value--driver" title={form.driver}>
+                  {form.driver ? form.driver.replace(/^(.)/, s => s.toUpperCase()) : ''}
                 </div>
                 <div className="stat-label">Driver</div>
               </div>
               
               <div className="stat-card">
-                <div className="stat-value">
-                  {form.circuit.toUpperCase()}
+                <div className="stat-value stat-value--circuit" title={form.circuit}>
+                  {form.circuit ? form.circuit.replace(/^(.)/, s => s.toUpperCase()) : ''}
                 </div>
                 <div className="stat-label">Circuit</div>
               </div>
               
               <div className="stat-card">
-                <div className="stat-value">
+                <div className="stat-value stat-value--year">
                   {form.year}
                 </div>
                 <div className="stat-label">Season</div>
               </div>
               
               <div className="stat-card">
-                <div className="stat-value">
-                  {form.compound.toUpperCase()}
+                <div className="stat-value stat-value--compound" title={form.compound}>
+                  {form.compound ? form.compound.replace(/^(.)/, s => s.toUpperCase()) : ''}
                 </div>
                 <div className="stat-label">Compound</div>
               </div>

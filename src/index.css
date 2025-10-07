@@ -438,6 +438,33 @@ body {
   margin-bottom: 8px;
 }
 
+/* Compact stat values for small screens */
+@media (max-width: 480px) {
+  .stat-value {
+    font-size: 26px;
+  }
+}
+
+/* Truncate long stat labels/values and ensure they wrap nicely */
+.stat-card .stat-value,
+.stat-card .stat-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Make the stat grid collapse to two columns on small screens for better layout */
+.grid-4 {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .grid-4 {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
 /* Driver card specific styling to prevent overflow */
 .driver-card .driver-name {
   font-size: 28px;
