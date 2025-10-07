@@ -450,7 +450,8 @@ body {
 .stat-card .stat-label {
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  /* allow wrapping for long names instead of truncating */
+  white-space: normal;
 }
 
 /* Make the stat grid collapse to two columns on small screens for better layout */
@@ -463,6 +464,16 @@ body {
   .grid-4 {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
+}
+
+/* Responsive font sizing for stat values to prevent overflow while keeping prominence */
+.stat-value {
+  font-size: clamp(20px, 4.5vw, 36px);
+}
+
+/* Add extra padding for small devices so text can wrap comfortably */
+@media (max-width: 480px) {
+  .stat-card { padding: 20px; }
 }
 
 /* Driver card specific styling to prevent overflow */
