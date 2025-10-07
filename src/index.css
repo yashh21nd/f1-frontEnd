@@ -445,13 +445,20 @@ body {
   }
 }
 
-/* Truncate long stat labels/values and ensure they wrap nicely */
-.stat-card .stat-value,
+/* Stat labels keep single-line ellipsis, but stat values should wrap and scale */
 .stat-card .stat-label {
   overflow: hidden;
   text-overflow: ellipsis;
-  /* allow wrapping for long names instead of truncating */
+  white-space: nowrap;
+}
+
+.stat-card .stat-value {
+  /* allow wrapping so full names are visible */
   white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 /* Make the stat grid collapse to two columns on small screens for better layout */
@@ -476,14 +483,15 @@ body {
   .stat-card { padding: 20px; }
 }
 
-/* Driver card specific styling to prevent overflow */
-.driver-card .driver-name {
-  font-size: 28px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  display: block;
+/* If driver-name appears inside a stat-card, allow wrapping there too */
+.driver-card .driver-name,
+.stat-card .driver-name,
+.stat-value--driver {
+  font-size: clamp(18px, 4vw, 32px);
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  word-break: break-word;
 }
 
 /* Ensure chart has a visible background and contrast for the line */
