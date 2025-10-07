@@ -198,8 +198,9 @@ body {
 
 /* Main Content Layout */
 .main-content {
-  margin-top: 80px;
-  min-height: calc(100vh - 80px);
+  /* keep main-content offset only for navbar height (approx 64px) */
+  margin-top: 64px;
+  min-height: calc(100vh - 64px);
 }
 
 /* Professional Container System */
@@ -666,8 +667,8 @@ body {
 
   /* Reduce header top margin on tablet devices */
   .page-header {
-    margin-top: 4.5rem; /* ~72px */
-    padding: 32px;
+    margin-top: 2rem; /* ~32px */
+    padding: 24px;
   }
   
   .page-subtitle {
@@ -737,8 +738,8 @@ body {
 
   /* Further reduce header top margin on small screens */
   .page-header {
-    margin-top: 3.5rem; /* ~56px */
-    padding: 20px;
+    margin-top: 1.5rem; /* ~24px */
+    padding: 16px;
   }
   
   .page-subtitle {
@@ -814,15 +815,15 @@ body {
 
 .page-header {
   text-align: center;
-  /* Add top spacing to avoid overlapping the fixed navbar (Tailwind mt-24 ~= 6rem) */
-  margin-top: 6rem;
-  margin-bottom: 48px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  /* reduce top spacing so header sits snugly under navbar */
+  margin-top: 2.5rem; /* 40px */
+  margin-bottom: 32px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .page-title {
