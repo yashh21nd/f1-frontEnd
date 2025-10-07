@@ -438,6 +438,27 @@ body {
   margin-bottom: 8px;
 }
 
+/* Driver card specific styling to prevent overflow */
+.driver-card .driver-name {
+  font-size: 28px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: block;
+}
+
+/* Ensure chart has a visible background and contrast for the line */
+.chart-container {
+  background: rgba(255,255,255,0.96);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.chart-container .h-96 {
+  min-height: 240px;
+}
+
 .stat-label {
   font-size: 14px;
   color: var(--text-secondary);

@@ -79,18 +79,27 @@ const RacePace = () => {
     }
   };
 
-  // Chart configuration for lap times
+  // Prepare numeric chart data safely (filter out invalid values)
+  const numericLapValues = (lapTimes?.lap_times || [])
+    .map(time => {
+      if (!time || typeof time !== 'string') return NaN;
+      const parts = time.split(':');
+      if (parts.length < 2) return NaN;
+      const min = parseFloat(parts[0]);
+      const sec = parseFloat(parts[1]);
+      if (isNaN(min) || isNaN(sec)) return NaN;
+      return min * 60 + sec;
+    })
+    .map(v => (isFinite(v) ? v : NaN));
+
   const chartData = {
-    labels: lapTimes?.lap_times?.map((_, index) => `Lap ${index + 1}`) || [],
+    labels: numericLapValues.map((_, index) => `Lap ${index + 1}`),
     datasets: [
       {
         label: 'Lap Times',
-        data: lapTimes?.lap_times?.map(time => {
-          const [min, sec] = time.split(':');
-          return parseFloat(min) * 60 + parseFloat(sec);
-        }) || [],
+        data: numericLapValues,
         borderColor: '#DC2626',
-        backgroundColor: 'rgba(220, 38, 38, 0.1)',
+        backgroundColor: 'rgba(220, 38, 38, 0.12)',
         borderWidth: 3,
         pointBackgroundColor: '#F59E0B',
         pointBorderColor: '#DC2626',
@@ -98,6 +107,10 @@ const RacePace = () => {
         pointHoverRadius: 8,
         fill: true,
         tension: 0.4,
+        showLine: true,
+        spanGaps: true,
+        borderJoinStyle: 'round',
+        borderCapStyle: 'round'
       },
     ],
   };
@@ -166,6 +179,16 @@ const RacePace = () => {
         }
       },
     },
+    elements: {
+      line: {
+        tension: 0.4,
+        borderWidth: 3,
+      },
+      point: {
+        radius: 5,
+        hoverRadius: 8,
+      }
+    }
   };
 
   return (
@@ -289,7 +312,7 @@ const RacePace = () => {
           <h4 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>
             Performance Overview
           </h4>
-          <div className="grid-4">
+            <div className="grid-4">
             <div className="stat-card">
               <div className="stat-value">
                 {lapTimes.fastest_lap || "N/A"}
@@ -311,9 +334,9 @@ const RacePace = () => {
               <div className="stat-label">Total Laps</div>
             </div>
             
-            <div className="stat-card">
-              <div className="stat-value">
-                {lapTimes.driver?.toUpperCase() || "N/A"}
+            <div className="stat-card driver-card">
+              <div className="stat-value driver-name">
+                {lapTimes.driver ? lapTimes.driver.replace(/^(.)/, s => s.toUpperCase()) : "N/A"}
               </div>
               <div className="stat-label">Driver</div>
             </div>
